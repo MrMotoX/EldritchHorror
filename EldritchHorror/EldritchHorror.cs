@@ -59,7 +59,7 @@ namespace EldritchHorror
         {
             if (Program.ChooseInvestigator(ListSelection.SelectedItem as Investigator))
             {
-                TextBoxInvestigator.Text = Program.investigators.Find(f => f.BelongsToPlayer == 0).Name;
+                TextBoxInvestigator.Text = Program.Investigators.Find(f => f.BelongsToPlayer == 0).Name;
             }
             HideSelectionList();
         }
@@ -73,7 +73,7 @@ namespace EldritchHorror
         {
             if (TextBoxPlayerName.Text.Length > 0)
             {
-                Program.players.Add(new Player(TextBoxPlayerName.Text));
+                Program.Players.Add(new Player(TextBoxPlayerName.Text));
                 GroupBoxPlayer1.Text = TextBoxPlayerName.Text;
                 GroupBoxPlayer1.Visible = true;
             }
@@ -82,7 +82,7 @@ namespace EldritchHorror
 
         private void ButtonChooseInvestigator_Click(object sender, EventArgs e)
         {
-            ListSelection.DataSource = Program.investigators;
+            ListSelection.DataSource = Program.Investigators;
             ShowSelectionList();
         }
     }

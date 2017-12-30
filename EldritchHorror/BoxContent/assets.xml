@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Cards>
+  <Card>
+    <Name>.45 Colt Revolver</Name>
+    <Cost>1</Cost>
+    <Traits>
+      <Trait>Item</Trait>
+      <Trait>Weapon</Trait>
+    </Traits>
+  </Card>
+  <Card>
+    <Name>Agency Quarantine</Name>
+    <Cost>4</Cost>
+    <Traits>
+      <Trait>Service</Trait>
+    </Traits>
+  </Card>
+</Cards>
