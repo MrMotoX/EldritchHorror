@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,47 +35,66 @@ namespace EldritchHorror
 
         private static void InitBoxContent()
         {
-            InitCards();
-        }
-
-        private static void InitCards()
-        {
             Assets = new List<Asset>();
             AssetsReader = new BoxContentParser("BoxContent/assets.xml");
+            InitCards(ref AssetsReader, ref Assets);
+        }
 
-            string name = "";
-            List<string> traits = new List<string>();
-            int cost = 0;
+        private struct CardInfo
+        {
+            public string Name;
+            public List<string> Traits;
+            public int Cost;
 
-            while (AssetsReader.Reader.Read())
+            public CardInfo(string name)
             {
-                if (AssetsReader.Reader.NodeType == XmlNodeType.Element)
+                Name = name;
+                Traits = new List<string>();
+                Cost = 0;
+            }
+        }
+
+        private static void InitCards(ref BoxContentParser reader, ref List<Asset> assets)
+        {
+            CardInfo card = new CardInfo("");
+
+            while (reader.Reader.Read())
+            {
+                UpdateCardInfo(ref reader, ref card);
+
+                if (EndOfCardInfo(ref reader))
                 {
-                    if (AssetsReader.Reader.Name == "Name")
-                    {
-                        name = AssetsReader.Reader.ReadElementContentAsString();
-                    }
+                    assets.Add(new Asset(card.Name, card.Traits, card.Cost));
 
-                    if (AssetsReader.Reader.Name == "Trait")
-                    {
-                        traits.Add(AssetsReader.Reader.ReadElementContentAsString());
-                    }
-
-                    if (AssetsReader.Reader.Name == "Cost")
-                    {
-                        cost = AssetsReader.Reader.ReadElementContentAsInt();
-                    }
-                }
-
-                if (AssetsReader.Reader.NodeType == XmlNodeType.EndElement && AssetsReader.Reader.Name == "Card")
-                {
-                    Assets.Add(new Asset(name, traits, cost));
-
-                    name = "";
-                    traits = new List<string>();
-                    cost = 0;
+                    card = new CardInfo("");
                 }
             }
+        }
+
+        private static void UpdateCardInfo(ref BoxContentParser reader, ref CardInfo card)
+        {
+            if (reader.Reader.NodeType == XmlNodeType.Element)
+            {
+                if (reader.Reader.Name == "Name")
+                {
+                    card.Name = reader.Reader.ReadElementContentAsString();
+                }
+
+                if (reader.Reader.Name == "Trait")
+                {
+                    card.Traits.Add(reader.Reader.ReadElementContentAsString());
+                }
+
+                if (reader.Reader.Name == "Cost")
+                {
+                    card.Cost = reader.Reader.ReadElementContentAsInt();
+                }
+            }
+        }
+
+        private static bool EndOfCardInfo(ref BoxContentParser reader)
+        {
+            return reader.Reader.NodeType == XmlNodeType.EndElement && reader.Reader.Name == "Card";
         }
 
         public static void SetupGame()
@@ -85,25 +105,25 @@ namespace EldritchHorror
                 new Investigator("Lara Croft", 34, "Tokyo", 4, 8, 2, 4, 3, 1, 3)
             };
 
-            ResetAssets();
-            ShuffleAssetDeck();
+            AssetDeck = Assets;
+            AssetDeck.Shuffle();
         }
 
-        private static void ResetAssets()
+        public static void Shuffle<T>(this IList<T> list)
         {
-            if (AssetDeck == null)
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            int n = list.Count;
+            while (n > 1)
             {
-                AssetDeck = new List<Asset>();
+                byte[] box = new byte[1];
+                do provider.GetBytes(box);
+                while (!(box[0] < n * (Byte.MaxValue / n)));
+                int k = (box[0] % n);
+                n--;
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
             }
-            else
-            {
-                AssetDeck.Clear();
-            }
-        }
-
-        private static void ShuffleAssetDeck()
-        {
-            throw new NotImplementedException();
         }
 
         public static bool ChooseInvestigator(Investigator investigator)
