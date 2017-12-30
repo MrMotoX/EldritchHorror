@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asset.cs" />
+    <Compile Include="Card.cs" />
     <Compile Include="EldritchHorror.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +58,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trait.cs" />
+    <Compile Include="XmlParser.cs" />
     <EmbeddedResource Include="EldritchHorror.resx">
       <DependentUpon>EldritchHorror.cs</DependentUpon>
     </EmbeddedResource>
