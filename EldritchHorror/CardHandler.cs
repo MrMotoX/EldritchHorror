@@ -129,11 +129,11 @@ namespace EldritchHorror
 
             while (Reserve.Count < 4)
             {
-                Reserve.Add(PickFirstAssetFromDeck());
+                Reserve.Add(RemoveFirstAssetFromDeckAndReturn());
             }
         }
 
-        private static Asset PickFirstAssetFromDeck()
+        private static Asset RemoveFirstAssetFromDeckAndReturn()
         {
             Asset asset = AssetsDeck.First();
             AssetsDeck.Remove(asset);
