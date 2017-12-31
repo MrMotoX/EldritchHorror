@@ -133,12 +133,27 @@ namespace EldritchHorror
             }
         }
 
-        private static Asset RemoveFirstAssetFromDeckAndReturn()
+        public static Asset RemoveFirstAssetFromDeckAndReturn()
         {
             Asset asset = AssetsDeck.First();
             AssetsDeck.Remove(asset);
 
             return asset;
+        }
+
+        public static Asset RemoveAssetByNameFromReserveAndReturn(string name)
+        {
+            Asset asset = Reserve.Find(x => x.GetName() == name);
+            
+            throw new NotImplementedException();
+
+            if (asset != null)
+            {
+                Reserve.Remove(asset);
+                return asset;
+            }
+
+            return null;
         }
     }
 }

@@ -16,5 +16,10 @@ namespace EldritchHorror
             Name = name;
             Traits = traits;
         }
+
+        public string GetName()
+        {
+            return Name;
+        }
     }
 }
