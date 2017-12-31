@@ -15,4 +15,35 @@
       <Trait>Service</Trait>
     </Traits>
   </Card>
+  <Card>
+    <Name>Kerosene</Name>
+    <Cost>1</Cost>
+    <Traits>
+      <Trait>Item</Trait>
+    </Traits>
+  </Card>
+  <Card>
+    <Name>.45 Automatic</Name>
+    <Cost>2</Cost>
+    <Traits>
+      <Trait>Item</Trait>
+      <Trait>Weapon</Trait>
+    </Traits>
+  </Card>
+  <Card>
+    <Name>.38 Revolver</Name>
+    <Cost>1</Cost>
+    <Traits>
+      <Trait>Item</Trait>
+      <Trait>Weapon</Trait>
+    </Traits>
+  </Card>
+  <Card>
+    <Name>Arcane Tome</Name>
+    <Cost>3</Cost>
+    <Traits>
+      <Trait>Item</Trait>
+      <Trait>Tome</Trait>
+    </Traits>
+  </Card>
 </Cards>
